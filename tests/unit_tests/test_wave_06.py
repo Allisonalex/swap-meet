@@ -31,13 +31,9 @@ def test_get_no_matching_items_by_category():
         inventory=[item_a, item_b, item_c]
     )
 
-    items = vendor.get_by_category("Electronics")
+    result = vendor.get_by_category("Electronics")
 
-    raise Exception("Complete this test according to comments below.")
-    # *********************************************************************
-    # ****** Complete Assert Portion of this test **********
-    # *********************************************************************
-
+    assert len(result) == 0
 
 def test_best_by_category():
     item_a = Clothing(condition=2.0)
@@ -110,14 +106,17 @@ def test_swap_best_by_category():
         their_priority="Decor"
     )
 
-    raise Exception("Complete this test according to comments below.")
-    # *********************************************************************
-    # ****** Complete Assert Portion of this test **********
-    # *********************************************************************
-    # Assertions should check:
-    # - That the results is truthy
-    # - That tai and jesse's inventories are the correct length
-    # - That all the correct items are in tai and jesse's inventories, including the items which were swapped from one vendor to the other
+    assert result is True
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+    assert item_f in tai.inventory
+
+    assert item_d in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_c in jesse.inventory    
 
 
 def test_swap_best_by_category_reordered():
@@ -143,14 +142,17 @@ def test_swap_best_by_category_reordered():
         their_priority="Decor"
     )
 
-    raise Exception("Complete this test according to comments below.")
-    # *********************************************************************
-    # ****** Complete Assert Portion of this test **********
-    # *********************************************************************
-    # Assertions should check:
-    # - That result is truthy
-    # - That tai and jesse's inventories are the correct length
-    # - That all the correct items are in tai and jesse's inventories, and that the items that were swapped are not there
+    assert result is True
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+    assert item_f in tai.inventory
+
+    assert item_d in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_c in jesse.inventory
 
 
 def test_swap_best_by_category_no_inventory_is_false():
@@ -228,14 +230,17 @@ def test_swap_best_by_category_no_match_is_false():
         their_priority="Clothing"
     )
 
-    raise Exception("Complete this test according to comments below.")
-    # *********************************************************************
-    # ****** Complete Assert Portion of this test **********
-    # *********************************************************************
-    # Assertions should check:
-    # - That result is falsy
-    # - That tai and jesse's inventories are the correct length
-    # - That all the correct items are in tai and jesse's inventories
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+    assert item_c in tai.inventory
+
+    assert item_d in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_f in jesse.inventory
 
 
 def test_swap_best_by_category_no_other_match_is_false():
@@ -261,11 +266,29 @@ def test_swap_best_by_category_no_other_match_is_false():
         their_priority="Decor"
     )
 
-    raise Exception("Complete this test according to comments below.")
-    # *********************************************************************
-    # ****** Complete Assert Portion of this test **********
-    # *********************************************************************
-    # Assertions should check:
-    # - That result is falsy
-    # - That tai and jesse's inventories are the correct length
-    # - That all the correct items are in tai and jesse's inventories
+    assert result is False
+    assert len(tai.inventory) == 3
+    assert len(jesse.inventory) == 3
+
+    assert item_a in tai.inventory
+    assert item_b in tai.inventory
+    assert item_c in tai.inventory
+
+    assert item_d in jesse.inventory
+    assert item_e in jesse.inventory
+    assert item_f in jesse.inventory
+
+def test_swap_by_newest():
+    item_a = Item(age=2)
+    item_b = Item(age=1)
+    my = Vendor([item_a, item_b])
+
+    item_c = Item(age=3)
+    item_d = Item(age=0)
+    them = Vendor([item_c, item_d])
+
+    result = my.swap_by_newest(them)
+
+    assert result is True
+    assert item_b in them.inventory
+    assert item_d in my.inventory
